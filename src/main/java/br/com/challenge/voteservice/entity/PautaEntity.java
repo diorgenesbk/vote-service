@@ -23,8 +23,6 @@ public class PautaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pautaId;
-
     private String description;
-
     private ZonedDateTime creationDate;
 }

@@ -8,7 +8,6 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'br.com.challenge'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '8'
 
 configurations {
 	compileOnly {
@@ -21,6 +20,8 @@ repositories {
 }
 
 dependencies {
+	implementation 'io.springfox:springfox-swagger2:2.9.2'
+	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.2'
 	implementation 'org.springframework.boot:spring-boot-starter:2.5.2'
@@ -35,6 +36,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+
 
 test {
 	useJUnitPlatform()
