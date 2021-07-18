@@ -26,10 +26,10 @@ public class VoteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer voteId;
-
-    private String choice;
-
+    private Boolean choice;
     private ZonedDateTime voteDateTime;
+    private Integer sessionId;
+    private Integer userId;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="sessionId", insertable = false, updatable = false)

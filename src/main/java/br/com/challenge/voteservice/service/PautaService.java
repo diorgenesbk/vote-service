@@ -1,4 +1,4 @@
-package br.com.challenge.voteservice;
+package br.com.challenge.voteservice.service;
 
 import br.com.challenge.voteservice.dto.PautaDto;
 import br.com.challenge.voteservice.entity.PautaEntity;

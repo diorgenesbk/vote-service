@@ -18,10 +18,17 @@ public class PautaMapper {
     private final ObjectMapper objectMapper;
 
     public PautaEntity mapToEntity(PautaDto pautaDto){
-        return objectMapper.convertValue(pautaDto, PautaEntity.class);
+        return PautaEntity.builder()
+                .creationDate(defineCreationDate(pautaDto))
+                .description(pautaDto.getDescription())
+                .build();
     }
 
     public PautaDto mapToDto(PautaRequest pautaRequest){
-        return  objectMapper.convertValue(pautaRequest, PautaDto.class);
+        return objectMapper.convertValue(pautaRequest, PautaDto.class);
+    }
+
+    private ZonedDateTime defineCreationDate(PautaDto pautaDto){
+        return ObjectUtils.isEmpty(pautaDto.getCreationDate()) ? ZonedDateTime.now() : pautaDto.getCreationDate();
     }
 }

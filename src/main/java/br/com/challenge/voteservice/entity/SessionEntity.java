@@ -34,6 +34,8 @@ public class SessionEntity {
 
     private ZonedDateTime creationDate;
 
+    private Integer pautaId;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="pautaId", insertable = false, updatable = false)
     private PautaEntity pauta;
