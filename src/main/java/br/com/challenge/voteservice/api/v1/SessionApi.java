@@ -1,9 +1,9 @@
 package br.com.challenge.voteservice.api.v1;
 
-import br.com.challenge.voteservice.service.PautaService;
-import br.com.challenge.voteservice.api.v1.request.PautaRequest;
-import br.com.challenge.voteservice.dto.PautaDto;
-import br.com.challenge.voteservice.mapper.PautaMapper;
+import br.com.challenge.voteservice.api.v1.request.SessionRequest;
+import br.com.challenge.voteservice.dto.SessionDto;
+import br.com.challenge.voteservice.mapper.SessionMapper;
+import br.com.challenge.voteservice.service.SessionService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,16 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/pautas")
-public class PautaApi {
+@RequestMapping("/v1/sessions")
+public class SessionApi {
 
-    private final PautaService pautaService;
-    private final PautaMapper pautaMapper;
+    private final SessionService sessionService;
+    private final SessionMapper sessionMapper;
 
-    @ApiOperation(value="Cadastro de Pautas")
+    @ApiOperation(value="Abertura de nova sessão")
     @PostMapping()
-    public ResponseEntity<?> registerPauta(@RequestBody @Validated PautaRequest pautaRequest){
-        pautaService.registerPauta(pautaMapper.mapToDto(pautaRequest));
+    public ResponseEntity<?> openSession(@RequestBody @Validated SessionRequest sessionRequest){
+        SessionDto sessionDto = sessionMapper.mapToDto(sessionRequest);
+        sessionService.openSession(sessionDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
