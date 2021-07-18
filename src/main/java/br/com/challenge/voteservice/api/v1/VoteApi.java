@@ -1,6 +1,6 @@
 package br.com.challenge.voteservice.api.v1;
 
-import br.com.challenge.voteservice.UserAlreadyVotedException;
+import br.com.challenge.voteservice.exception.UserAlreadyVotedException;
 import br.com.challenge.voteservice.api.v1.request.VoteRequest;
 import br.com.challenge.voteservice.mapper.ErrorMapper;
 import br.com.challenge.voteservice.mapper.VoteMapper;
@@ -25,7 +25,7 @@ public class VoteApi {
     private final VoteMapper voteMapper;
     private final ErrorMapper errorMapper;
 
-    @ApiOperation(value="Votação")
+    @ApiOperation(value="Receber o voto de um determinado usuário")
     @PostMapping()
     public ResponseEntity<?> registerVote(@RequestBody @Validated VoteRequest voteRequest) {
         try{

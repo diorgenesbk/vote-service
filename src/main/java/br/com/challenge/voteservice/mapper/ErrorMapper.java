@@ -13,9 +13,17 @@ import org.springframework.stereotype.Component;
 public class ErrorMapper {
 
     public ErrorResponse buildConflictResponse(String error){
+        return buildResponse(error, HttpStatus.CONFLICT);
+    }
+
+    public ErrorResponse buildNotFoundResponse(String error){
+        return buildResponse(error, HttpStatus.NOT_FOUND);
+    }
+
+    private ErrorResponse buildResponse(String error, HttpStatus status){
         return ErrorResponse.builder()
                 .error(error)
-                .status(HttpStatus.CONFLICT)
+                .status(status)
                 .build();
     }
 

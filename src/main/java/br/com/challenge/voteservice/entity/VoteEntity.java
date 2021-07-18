@@ -30,12 +30,10 @@ public class VoteEntity {
     private ZonedDateTime voteDateTime;
     private Integer sessionId;
     private Integer userId;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="sessionId", insertable = false, updatable = false)
     private SessionEntity session;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="userId", insertable = false, updatable = false)
     private UserEntity user;
 }

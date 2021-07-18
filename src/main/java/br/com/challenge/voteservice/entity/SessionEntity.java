@@ -13,8 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.ZonedDateTime;
+import java.util.List;
+
 
 @Entity
 @Data
@@ -27,17 +30,15 @@ public class SessionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sessionId;
-
     private String description;
-
     private Integer lifetime;
-
     private ZonedDateTime creationDate;
-
     private Integer pautaId;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="pautaId", insertable = false, updatable = false)
     private PautaEntity pauta;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "sessionId", referencedColumnName = "sessionId")
+    private List<VoteEntity> votes;
 
 }
