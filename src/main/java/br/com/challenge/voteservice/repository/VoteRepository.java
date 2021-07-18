@@ -9,6 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface VoteRepository extends JpaRepository<VoteEntity, Integer> {
-
     Optional<VoteEntity> findByUserIdAndSessionId(Integer userId, Integer sessionId);
 }

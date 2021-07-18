@@ -1,4 +1,4 @@
-package br.com.challenge.voteservice;
+package br.com.challenge.voteservice.exception;
 
 public class UserAlreadyVotedException extends Exception {
 

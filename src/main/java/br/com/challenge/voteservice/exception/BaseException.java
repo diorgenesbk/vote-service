@@ -1,4 +1,4 @@
-package br.com.challenge.voteservice.service;
+package br.com.challenge.voteservice.exception;
 
 import org.springframework.http.HttpStatus;
 
