@@ -1,11 +1,9 @@
 package br.com.challenge.voteservice.mapper;
 
 import br.com.challenge.voteservice.api.v1.request.SessionRequest;
-import br.com.challenge.voteservice.dto.PautaDto;
 import br.com.challenge.voteservice.dto.SessionDto;
 import br.com.challenge.voteservice.entity.SessionEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mysql.cj.Session;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

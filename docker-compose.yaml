@@ -1,0 +1,40 @@
+version: '3'
+services:
+  vote-service:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: vote-service
+    networks:
+      - vote-network
+    tty: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - vote-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://vote-db:3306/vote
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  vote-db:
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: vote-db
+    restart: always
+    tty: true
+    ports:
+    - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=vote
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+    networks:
+      - vote-network
+
+networks:
+  vote-network:
+    driver: bridge
