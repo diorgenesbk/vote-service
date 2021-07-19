@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vote-service-svc
+spec:
+  selector:
+    app: vote-service
+  type: LoadBalancer
+  ports:
+  - name: vote-service-svc
+    port: 8080
+    protocol: TCP
