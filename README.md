@@ -9,5 +9,5 @@ Rodar a aplicação em nuvem
  - executar na raíz do projeto:
     - kubectl apply -f .\k8s\deployment.yaml
     - kubectl apply -f .\k8s\service.yaml
-   - rodar no banco os scripts de inicialização disponíveis em:
+    - rodar no banco os scripts de inicialização disponíveis em:
       - https://github.com/diorgenesbk/vote-database
