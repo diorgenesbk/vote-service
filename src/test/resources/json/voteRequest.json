@@ -1,5 +1,5 @@
 {
-  "description": "string",
-  "lifetime": 0,
-  "pautaId": 0
+  "choice": true,
+  "sessionId": 0,
+  "userId": 0
 }

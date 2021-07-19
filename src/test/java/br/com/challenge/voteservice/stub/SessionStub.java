@@ -1,38 +1,23 @@
 package br.com.challenge.voteservice.stub;
 
-import br.com.challenge.voteservice.dto.PautaDto;
-import br.com.challenge.voteservice.entity.PautaEntity;
+import br.com.challenge.voteservice.dto.SessionDto;
 import br.com.challenge.voteservice.entity.SessionEntity;
-import br.com.challenge.voteservice.entity.VoteEntity;
-
 import java.time.ZonedDateTime;
-import java.util.Collections;
 
 
-public class PautaStub {
+public class SessionStub {
 
-    public static PautaDto anyDto(){
-        return PautaDto.builder()
+    public static SessionDto anyDto(){
+        return SessionDto.builder()
                 .description("description")
                 .build();
     }
 
-    public static PautaEntity anyEntity(){
-        return PautaEntity.builder()
-                .description("description")
-                .pautaId(1)
-                .creationDate(ZonedDateTime.now())
-                .sessions(Collections.singletonList(anySession()))
-                .build();
-    }
-
-    private static SessionEntity anySession(){
+    public static SessionEntity anyEntity(){
         return SessionEntity.builder()
-                .lifetime(1)
-                .pautaId(1)
                 .description("description")
+                .pautaId(1)
                 .creationDate(ZonedDateTime.now())
-                .votes(Collections.singletonList(VoteEntity.builder().sessionId(1).choice(true).userId(1).build()))
                 .build();
     }
 }

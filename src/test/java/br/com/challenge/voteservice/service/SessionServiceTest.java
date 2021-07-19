@@ -4,8 +4,11 @@ import br.com.challenge.voteservice.api.v1.response.VoteCountResponse;
 import br.com.challenge.voteservice.exception.PautaDoesNotHaveVoteException;
 import br.com.challenge.voteservice.exception.PautaNotFoundException;
 import br.com.challenge.voteservice.mapper.PautaMapper;
+import br.com.challenge.voteservice.mapper.SessionMapper;
 import br.com.challenge.voteservice.repository.PautaRepository;
+import br.com.challenge.voteservice.repository.SessionRepository;
 import br.com.challenge.voteservice.stub.PautaStub;
+import br.com.challenge.voteservice.stub.SessionStub;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +19,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import springfox.documentation.spring.web.ObjectMapperConfigurer;
 
 import java.util.Optional;
 
@@ -25,18 +27,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 
-
-@DisplayName("Dado que há uma pauta")
-public class PautaServiceTest {
+@DisplayName("Dado que há uma sessão")
+public class SessionServiceTest {
 
     @Spy
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Spy
-    private PautaMapper pautaMapper = new PautaMapper(objectMapper);
+    private SessionMapper sessionMapper = new SessionMapper(objectMapper);
     @Mock
-    private PautaRepository pautaRepository;
+    private SessionRepository sessionRepository;
     @InjectMocks
-    private PautaService pautaService;
+    private SessionService sessionService;
 
     @BeforeEach
     void init() {
@@ -44,19 +45,10 @@ public class PautaServiceTest {
     }
 
     @Test
-    @DisplayName("Quando tentamos registrar uma Pauta")
-    void registerPauta(){
-        Mockito.when(pautaRepository.save(Mockito.any())).thenReturn(PautaStub.anyEntity());
-        pautaService.registerPauta(PautaStub.anyDto());
-        verify(pautaRepository, times(1)).save(Mockito.any());
-    }
-
-    @Test
-    @DisplayName("Quando consultamos as quantidades de votos")
-    void getVoteCount() throws PautaNotFoundException, PautaDoesNotHaveVoteException {
-        Mockito.when(pautaRepository.findBypautaId(Mockito.anyInt())).thenReturn(Optional.of(PautaStub.anyEntity()));
-        VoteCountResponse voteCountResponse = pautaService.getVoteCount(anyInt());
-
-        Assertions.assertEquals(1, voteCountResponse.getVoteCount());
+    @DisplayName("Quando tentamos abrir uma nova Sessão")
+    void registerSession(){
+        Mockito.when(sessionRepository.save(Mockito.any())).thenReturn(SessionStub.anyEntity());
+        sessionService.openSession(SessionStub.anyDto());
+        verify(sessionRepository, times(1)).save(Mockito.any());
     }
 }

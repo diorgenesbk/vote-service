@@ -1,9 +1,9 @@
 package br.com.challenge.voteservice.api.v1;
 
-import br.com.challenge.voteservice.exception.UserAlreadyVotedException;
+import br.com.challenge.voteservice.exception.CpfIsNotValidException;
 import br.com.challenge.voteservice.mapper.ErrorMapper;
-import br.com.challenge.voteservice.mapper.VoteMapper;
-import br.com.challenge.voteservice.service.VoteService;
+import br.com.challenge.voteservice.mapper.UserMapper;
+import br.com.challenge.voteservice.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,55 +14,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-public class VoteApiTest {
+public class UserApiTest {
     @Autowired
     private MockMvc mvc;
     @Mock
     private ErrorMapper errorMapper;
     @Mock
-    private VoteMapper voteMapper;
+    private UserMapper userMapper;
     @Mock
-    private VoteService voteService;
+    private UserService userService;
     @InjectMocks
-    private VoteApi voteApi;
+    private UserApi userApi;
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mvc = MockMvcBuilders.standaloneSetup(voteApi).build();
+        mvc = MockMvcBuilders.standaloneSetup(userApi).build();
     }
 
     @Test
-    public void registerVote() throws Exception {
-        String validBody = new String(Files.readAllBytes(Paths.get("src/test/resources/json/voteRequest.json")));
-        mvc.perform(post("/v1/votes")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(validBody))
+    public void getUserPermissionWithValidCpf() throws Exception {
+        mvc.perform(get("/v1/users/62373947021")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    public void registerVoteWithInvalidBody() throws Exception {
-        mvc.perform(post("/v1/votes")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(""))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    public void registerVoteWhenUserAlreadyVoted() throws Exception {
-        String validBody = new String(Files.readAllBytes(Paths.get("src/test/resources/json/voteRequest.json")));
-        Mockito.doThrow(UserAlreadyVotedException.class).when(voteService).registerVote(Mockito.any());
-        mvc.perform(post("/v1/votes")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(validBody))
+    public void getUserPermissionWithInvalidCpf() throws Exception {
+        Mockito.doThrow(CpfIsNotValidException.class).when(userService).getUserPermission(Mockito.anyString());
+        mvc.perform(get("/v1/users/11111111111")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
     }
 }
