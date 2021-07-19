@@ -1,9 +1,9 @@
 package br.com.challenge.voteservice.exception;
 
-public class UserAlreadyVotedException extends Exception {
+public class CpfIsNotValidException extends Exception {
 
-    public UserAlreadyVotedException() {
-        super("O usuário informado já votou na respectiva sessão");
+    public CpfIsNotValidException() {
+        super("O Cpf do usuário não é valido");
     }
 
 }

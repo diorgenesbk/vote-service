@@ -30,11 +30,16 @@ public class PautaApi {
     private final PautaMapper pautaMapper;
     private final ErrorMapper errorMapper;
 
-    @ApiOperation(value="Cadastro de Pautas")
+    @ApiOperation(value="Registrar uma nova pauta")
     @PostMapping()
     public ResponseEntity<?> registerPauta(@RequestBody @Validated PautaRequest pautaRequest){
-        pautaService.registerPauta(pautaMapper.mapToDto(pautaRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        try{
+            pautaService.registerPauta(pautaMapper.mapToDto(pautaRequest));
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception ex){
+            //log
+            throw ex;
+        }
     }
 
     @ApiOperation(value="Contabilizar os votos de uma determinada pauta", response = VoteCountResponse.class)
@@ -42,12 +47,17 @@ public class PautaApi {
     public ResponseEntity<?> getVoteCount(@PathVariable Integer pautaId) {
         try{
             return ResponseEntity.ok(pautaService.getVoteCount(pautaId));
+        } catch (PautaDoesNotHaveVoteException ex){
+            return responseNotFound(ex.getMessage());
+        } catch (PautaNotFoundException ex){
+            return responseNotFound(ex.getMessage());
+        } catch (Exception ex){
+            //log
+            throw ex;
         }
-        catch (PautaDoesNotHaveVoteException ex){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMapper.buildNotFoundResponse(ex.getMessage()));
-        }
-        catch (PautaNotFoundException ex){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMapper.buildNotFoundResponse(ex.getMessage()));
-        }
+    }
+
+    private ResponseEntity responseNotFound(String message){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMapper.buildNotFoundResponse(message));
     }
 }

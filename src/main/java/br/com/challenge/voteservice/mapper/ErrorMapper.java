@@ -16,6 +16,10 @@ public class ErrorMapper {
         return buildResponse(error, HttpStatus.CONFLICT);
     }
 
+    public ErrorResponse buildBadRequestResponse(String error){
+        return buildResponse(error, HttpStatus.BAD_REQUEST);
+    }
+
     public ErrorResponse buildNotFoundResponse(String error){
         return buildResponse(error, HttpStatus.NOT_FOUND);
     }

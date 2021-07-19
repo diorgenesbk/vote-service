@@ -26,8 +26,13 @@ public class SessionApi {
     @ApiOperation(value="Abertura de nova sessão")
     @PostMapping()
     public ResponseEntity<?> openSession(@RequestBody @Validated SessionRequest sessionRequest){
-        SessionDto sessionDto = sessionMapper.mapToDto(sessionRequest);
-        sessionService.openSession(sessionDto);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        try{
+            SessionDto sessionDto = sessionMapper.mapToDto(sessionRequest);
+            sessionService.openSession(sessionDto);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception ex){
+            //log
+            throw ex;
+        }
     }
 }

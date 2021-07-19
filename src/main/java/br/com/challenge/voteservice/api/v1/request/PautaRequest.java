@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
+
 
 @Data
 @Builder
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel
 public class PautaRequest {
-    @ApiModelProperty(notes="Descrição da pauta")
+    @NonNull
+    @ApiModelProperty(notes="Descrição da pauta", required = true)
     private String description;
 }

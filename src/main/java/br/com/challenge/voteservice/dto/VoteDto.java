@@ -18,7 +18,7 @@ public class VoteDto {
     private Boolean choice;
     private ZonedDateTime voteDateTime;
     private Integer sessionId;
-    private SessionEntity session;
+    private SessionDto session;
     private Integer userId;
-    private UserEntity user;
+    private UserDto user;
 }

@@ -35,7 +35,8 @@ public class PautaMapper {
     public VoteCountResponse mapToVoteCountResponse(PautaEntity pautaEntity) throws PautaDoesNotHaveVoteException {
         return VoteCountResponse.builder()
                 .pauta(pautaEntity.getDescription())
-                .voteCount(getVoteCount(pautaEntity))
+                .voteCountPositive(getVoteCountPositive(pautaEntity))
+                .voteCountNegative(getVoteCountNegative(pautaEntity))
                 .build();
     }
 
@@ -43,12 +44,21 @@ public class PautaMapper {
         return ObjectUtils.isEmpty(pautaDto.getCreationDate()) ? ZonedDateTime.now() : pautaDto.getCreationDate();
     }
 
-    private Integer getVoteCount(PautaEntity pautaEntity) throws PautaDoesNotHaveVoteException {
+    private Long getVoteCountPositive(PautaEntity pautaEntity) throws PautaDoesNotHaveVoteException {
         verifyVoteCountIsEmpty(pautaEntity);
-        Integer voteCount = 0;
+        return getVoteCount(pautaEntity, Boolean.FALSE);
+    }
+
+    private Long getVoteCountNegative(PautaEntity pautaEntity) throws PautaDoesNotHaveVoteException {
+        verifyVoteCountIsEmpty(pautaEntity);
+        return getVoteCount(pautaEntity, Boolean.TRUE);
+    }
+
+    private Long getVoteCount(PautaEntity pautaEntity, Boolean choice) {
+        Long voteCount = 0L;
 
         for (SessionEntity session : pautaEntity.getSessions()) {
-            voteCount += session.getVotes().size();
+            voteCount += session.getVotes().stream().filter(vote -> choice.equals(vote.getChoice())).count();
         }
 
         return voteCount;

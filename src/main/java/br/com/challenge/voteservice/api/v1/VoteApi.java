@@ -2,6 +2,7 @@ package br.com.challenge.voteservice.api.v1;
 
 import br.com.challenge.voteservice.exception.UserAlreadyVotedException;
 import br.com.challenge.voteservice.api.v1.request.VoteRequest;
+import br.com.challenge.voteservice.exception.UserUnableToVoteException;
 import br.com.challenge.voteservice.mapper.ErrorMapper;
 import br.com.challenge.voteservice.mapper.VoteMapper;
 import br.com.challenge.voteservice.service.VoteService;
@@ -30,9 +31,13 @@ public class VoteApi {
     public ResponseEntity<?> registerVote(@RequestBody @Validated VoteRequest voteRequest) {
         try{
             voteService.registerVote(voteMapper.mapToDto(voteRequest));
-        }
-        catch (UserAlreadyVotedException ex){
+        } catch (UserAlreadyVotedException ex){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMapper.buildConflictResponse(ex.getMessage()));
+        } catch (UserUnableToVoteException ex){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMapper.buildBadRequestResponse(ex.getMessage()));
+        }catch (Exception ex){
+            //log
+            throw ex;
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).build();

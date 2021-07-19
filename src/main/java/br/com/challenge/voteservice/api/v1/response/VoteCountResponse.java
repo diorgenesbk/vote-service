@@ -14,6 +14,9 @@ import lombok.NoArgsConstructor;
 public class VoteCountResponse {
     @ApiModelProperty(notes = "Descrição da pauta em questão")
     private String pauta;
-    @ApiModelProperty(notes = "Quantidade de votos recebidos")
-    private Integer voteCount;
+    @ApiModelProperty(notes = "Quantidade de votos recebidos a favor")
+    private Long voteCountPositive;
+
+    @ApiModelProperty(notes = "Quantidade de votos recebidos contra")
+    private Long voteCountNegative;
 }
